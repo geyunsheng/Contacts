@@ -8,6 +8,7 @@
 
 #import "AddViewController.h"
 #import "pinyin.h"
+#import "MainTableViewController.h"
 
 
 @interface AddViewController ()
@@ -102,6 +103,13 @@
         self.person = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([Person class]) inManagedObjectContext:self.managedObjectContext];
     }
     //赋值
+    if ((self.nameTextField.text.length == 0)||(self.numberTextField.text.length == 0))
+    {
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:nil message:@"姓名和号码不能为空！" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+        [alert release];
+        return;
+    }
     self.person.name = self.nameTextField.text;
     self.person.number = self.numberTextField.text;
     self.person.firstN = [NSString stringWithFormat:@"%c",pinyinFirstLetter([self.person.name characterAtIndex:0])-32];
@@ -112,9 +120,10 @@
     
     //保存
     NSError *error;
-    if (![self.managedObjectContext save:&error]) {
-        NSLog(@"%@", [error localizedDescription]);
-    }
+    [self.managedObjectContext save:&error];
+//    if (![self.managedObjectContext save:&error]) {
+//        NSLog(@"%@", [error localizedDescription]);
+//    }
     
     //保存成功后POP到表视图
     [self.navigationController popToRootViewControllerAnimated:YES];

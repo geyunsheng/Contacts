@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MainTableViewController : UITableViewController<NSFetchedResultsControllerDelegate>
+@interface MainTableViewController : UITableViewController<NSFetchedResultsControllerDelegate,UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,UISearchDisplayDelegate>
 
 @end

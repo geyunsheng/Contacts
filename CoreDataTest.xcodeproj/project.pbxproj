@@ -28,6 +28,7 @@
 		189DAA8319FF27E600DFBC71 /* button.png in Resources */ = {isa = PBXBuildFile; fileRef = 189DAA8219FF27E600DFBC71 /* button.png */; };
 		189DAA8619FF2B2F00DFBC71 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 189DAA8519FF2B2F00DFBC71 /* Person.m */; };
 		189DAA8919FF384200DFBC71 /* pinyin.c in Sources */ = {isa = PBXBuildFile; fileRef = 189DAA8719FF384200DFBC71 /* pinyin.c */; };
+		189DAA8C1A007CCD00DFBC71 /* SearchBarCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 189DAA8B1A007CCD00DFBC71 /* SearchBarCellTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,8 @@
 		189DAA8519FF2B2F00DFBC71 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Person.m; path = ../Person.m; sourceTree = "<group>"; };
 		189DAA8719FF384200DFBC71 /* pinyin.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pinyin.c; sourceTree = "<group>"; };
 		189DAA8819FF384200DFBC71 /* pinyin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pinyin.h; sourceTree = "<group>"; };
+		189DAA8A1A007CCD00DFBC71 /* SearchBarCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchBarCellTableViewCell.h; path = ../SearchBarCellTableViewCell.h; sourceTree = "<group>"; };
+		189DAA8B1A007CCD00DFBC71 /* SearchBarCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchBarCellTableViewCell.m; path = ../SearchBarCellTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +134,8 @@
 		189DAA4719FDFF2100DFBC71 /* CoreDataTest */ = {
 			isa = PBXGroup;
 			children = (
+				189DAA8A1A007CCD00DFBC71 /* SearchBarCellTableViewCell.h */,
+				189DAA8B1A007CCD00DFBC71 /* SearchBarCellTableViewCell.m */,
 				189DAA8719FF384200DFBC71 /* pinyin.c */,
 				189DAA8819FF384200DFBC71 /* pinyin.h */,
 				189DAA8419FF2B2F00DFBC71 /* Person.h */,
@@ -281,6 +286,7 @@
 				189DAA7B19FE256300DFBC71 /* AddViewController.m in Sources */,
 				189DAA5219FDFF2100DFBC71 /* AppDelegate.m in Sources */,
 				189DAA7E19FE257700DFBC71 /* MainTableViewController.m in Sources */,
+				189DAA8C1A007CCD00DFBC71 /* SearchBarCellTableViewCell.m in Sources */,
 				189DAA5519FDFF2100DFBC71 /* CoreDataTest.xcdatamodeld in Sources */,
 				189DAA4E19FDFF2100DFBC71 /* main.m in Sources */,
 			);

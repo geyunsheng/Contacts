@@ -7,7 +7,7 @@
 //
 
 #import "MainTableViewController.h"
-//#import "ModifyViewController.h"
+#import "SearchBarCellTableViewCell.h"
 #import "Person.h"
 
 @interface MainTableViewController ()
@@ -15,6 +15,7 @@
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 //用来存储查询并适合TableView来显示的数据
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (retain, nonatomic) IBOutlet UISearchDisplayController *displayC;
 
 @end
 
@@ -32,7 +33,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     //通过application对象的代理对象获取上下文
     UIApplication *application = [UIApplication sharedApplication];
     id delegate = application.delegate;
@@ -56,11 +57,17 @@
     
     //执行fetchedResultsController
     NSError *error;
-    if ([self.fetchedResultsController performFetch:&error]) {
-    //    NSLog(@"%@", [error localizedDescription]);
-    }
+    [self.fetchedResultsController performFetch:&error];
+//    if ([self.fetchedResultsController performFetch:&error]) {
+//    //    NSLog(@"%@", [error localizedDescription]);
+//    }
     
     self.fetchedResultsController.delegate = self;
+    self.displayC.delegate = self;
+    self.displayC.searchResultsDataSource = self;
+    self.displayC.searchResultsDelegate =self;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -76,6 +83,7 @@
     //我们的数据中有多少个section, fetchedResultsController中的sections方法可以以数组的形式返回所有的section
     //sections数组中存的是每个section的数据信息
     NSArray *sections = [self.fetchedResultsController sections];
+    NSLog(@"sections count is %lu",(unsigned long)[sections count]);
     return sections.count;
 }
 
@@ -84,6 +92,7 @@
     NSArray *sections = [self.fetchedResultsController sections];
     id<NSFetchedResultsSectionInfo> sectionInfo = sections[section];
     
+    NSLog(@"%lu",(unsigned long)[sectionInfo numberOfObjects]);
     //返回每个section中的元素个数
     return [sectionInfo numberOfObjects];
 }
@@ -104,7 +113,19 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    
+//    static NSString* cellIdentifier = @"Cell";
+//    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    UITableViewCell *cell = nil;
+    [self.displayC.searchResultsTableView registerClass:[SearchBarCellTableViewCell class] forCellReuseIdentifier:@"SearchCell"];
+    if ([tableView isEqual:self.displayC.searchResultsTableView])
+    {
+         NSLog(@"search cell display");
+        cell = [tableView dequeueReusableCellWithIdentifier:@"SearchCell" forIndexPath:indexPath];
+    } else {
+         NSLog(@"table cell display");
+        cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    }
     
     //获取实体对象
     Person *person = [self.fetchedResultsController objectAtIndexPath:indexPath];
@@ -143,9 +164,10 @@
         
         //保存
         NSError *error;
-        if ([self.managedObjectContext save:&error]) {
-            NSLog(@"%@", [error localizedDescription]);
-        }
+        [self.managedObjectContext save:&error];
+//        if ([self.managedObjectContext save:&error]) {
+//          //  NSLog(@"%@", [error localizedDescription]);
+//        }
     }
 }
 
@@ -264,5 +286,54 @@
     
     //返回索引数组
     return index;
+}
+
+//当search中的文本变化时就执行下面的方法
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    //新建查询语句
+    NSFetchRequest * request = [[NSFetchRequest alloc]initWithEntityName:NSStringFromClass([Person class])];
+    //排序规则
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"firstN" ascending:YES];
+    [request setSortDescriptors:@[sortDescriptor]];
+    //添加谓词
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"name contains %@",searchText];
+    [request setPredicate:predicate];
+    
+    //把查询结果存入fetchedResultsController中
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"firstN" cacheName:nil];
+    NSError *error;
+    [self.fetchedResultsController performFetch:&error];
+//    if (![self.fetchedResultsController performFetch:&error]) {
+//    //     NSLog(@"%@", [error localizedDescription]);
+//        }
+}
+
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [self viewDidLoad];
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([tableView isEqual:self.displayC.searchResultsTableView])
+    {
+        NSLog(@"search cell selected");
+        Person *person = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        UIStoryboard * s = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+
+        //获取要目标视图
+        UIViewController *destination = [s instantiateViewControllerWithIdentifier:@"AddViewController"];
+
+       //键值编码传值
+        [destination setValue:person forKeyPath:@"person"];
+
+        [self.navigationController pushViewController:destination animated:YES];
+     }
+}
+
+- (void)dealloc {
+    [_displayC release];
+    [super dealloc];
 }
 @end

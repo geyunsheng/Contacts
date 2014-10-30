@@ -7,14 +7,22 @@
         <!--Main Table View Controller - 通讯录-->
         <scene sceneID="LlD-SC-EEr">
             <objects>
-                <tableViewController id="eGk-C8-Mfa" customClass="MainTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="MainTableView" id="eGk-C8-Mfa" customClass="MainTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="9zo-E6-XfF">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="rW1-a6-h7v">
+                            <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="eGk-C8-Mfa" id="rs0-ln-8rW"/>
+                            </connections>
+                        </searchBar>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="detailDisclosureButton" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" editingAccessoryType="detailDisclosureButton" textLabel="UMb-hP-GdH" detailTextLabel="kxD-A6-35s" style="IBUITableViewCellStyleSubtitle" id="IIs-q0-Kyt">
-                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="detailDisclosureButton" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="UMb-hP-GdH" detailTextLabel="kxD-A6-35s" style="IBUITableViewCellStyleSubtitle" id="IIs-q0-Kyt">
+                                <rect key="frame" x="0.0" y="130" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IIs-q0-Kyt" id="3RT-ym-0wj">
                                     <rect key="frame" x="0.0" y="0.0" width="253" height="43"/>
@@ -53,15 +61,28 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="displayC" destination="Ldh-j1-w2P" id="gG8-zz-MXt"/>
+                        <outlet property="searchDisplayController" destination="Ldh-j1-w2P" id="h4D-1A-6et"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ddv-cr-Kra" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController searchResultsTitle="" id="Ldh-j1-w2P">
+                    <connections>
+                        <outlet property="delegate" destination="eGk-C8-Mfa" id="JmN-nP-4cJ"/>
+                        <outlet property="searchBar" destination="rW1-a6-h7v" id="dhT-ga-59d"/>
+                        <outlet property="searchContentsController" destination="eGk-C8-Mfa" id="arx-ji-5YD"/>
+                        <outlet property="searchResultsDataSource" destination="eGk-C8-Mfa" id="byv-ia-VxG"/>
+                        <outlet property="searchResultsDelegate" destination="eGk-C8-Mfa" id="iZn-bf-wOf"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="510" y="-259"/>
         </scene>
         <!--Add View Controller - 编辑-->
         <scene sceneID="amx-Qm-KGv">
             <objects>
-                <viewController id="qRw-KB-OJ9" customClass="AddViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddViewController" id="qRw-KB-OJ9" customClass="AddViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="OXa-7t-rlD"/>
                         <viewControllerLayoutGuide type="bottom" id="q0A-Gg-3yj"/>
