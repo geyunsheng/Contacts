@@ -101,6 +101,14 @@
     {
         self.person = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([Person class]) inManagedObjectContext:self.managedObjectContext];
     }
+    if ((self.nameTextField.text.length == 0)||(self.numberTextField.text.length == 0))
+    {
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:nil message:@"姓名和号码不能为空！" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+        [alert release];
+        return;
+    }
+    
     //赋值
     self.person.name = self.nameTextField.text;
     self.person.number = self.numberTextField.text;
