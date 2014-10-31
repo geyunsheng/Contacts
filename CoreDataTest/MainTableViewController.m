@@ -61,6 +61,30 @@
     }
     
     self.fetchedResultsController.delegate = self;
+    
+    self.refreshControl = [[UIRefreshControl alloc]init];
+   // self.refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"下拉刷新"];
+    [self.refreshControl addTarget:self action:@selector(refreshValue:) forControlEvents:UIControlEventValueChanged];
+    
+}
+
+-(void)refreshValue:(id)sender
+{
+    if (self.refreshControl.refreshing)
+    {
+        self.refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"刷新中"];
+    }
+    [self performSelector:@selector(refreshData) withObject:nil afterDelay:2];
+}
+
+-(void)refreshData
+{
+    [self.refreshControl endRefreshing];
+//    self.refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"下拉刷新"];
+    [self.tableView reloadData];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"Refreshed" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alert show];
+    [alert release];
 }
 
 - (void)didReceiveMemoryWarning
