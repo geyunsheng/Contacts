@@ -22,7 +22,7 @@
 @end
 
 @implementation AddViewController
-
+BOOL saveFlag = YES;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -129,12 +129,54 @@
 }
 - (IBAction)addImage:(id)sender
 {
-    UIImagePickerController *picker = [[[UIImagePickerController alloc] init]autorelease];
-    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    picker.delegate = self;
-    picker.allowsEditing = YES;
-    [self presentViewController:picker animated:YES completion:nil];
+    UIActionSheet* sheet = [[UIActionSheet alloc]initWithTitle:@"请选择照片来源" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera",@"Image Gallary", nil ];
+    sheet.actionSheetStyle = UIActionSheetStyleAutomatic;
+    [sheet showInView:self.view];
+    [sheet release];
 
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    UIImagePickerController *picker = [[[UIImagePickerController alloc] init]autorelease];
+    switch (buttonIndex)
+    {
+        case 0:
+            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            picker.delegate = self;
+            picker.allowsEditing = YES;
+            saveFlag = YES;
+            [self presentViewController:picker animated:YES completion:nil];
+            break;
+        case 1:
+//            UIImagePickerController *picker = [[[UIImagePickerController alloc] init]autorelease];
+            picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            picker.delegate = self;
+            picker.allowsEditing = YES;
+            saveFlag = NO;
+            [self presentViewController:picker animated:YES completion:nil];
+            break;
+        default:
+            break;
+            
+    }
+}
+
+//实现图片回调方法，从相册获取图片
+-(void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    //获取到编辑好的图片
+    UIImage * image = info[UIImagePickerControllerEditedImage];
+    //把获取的图片设置成用户的头像
+    [self.imageButton setImage:image forState:UIControlStateNormal];
+    //存储照片
+    if (YES == saveFlag)
+    {
+        UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    }
+    //返回到原来View
+    [self dismissViewControllerAnimated:YES completion:^{}];
+    
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -142,20 +184,16 @@
 	[self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
-//实现图片回调方法，从相册获取图片
--(void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    
-    //获取到编辑好的图片
-    UIImage * image = info[UIImagePickerControllerEditedImage];
-    
-    //把获取的图片设置成用户的头像
-    [self.imageButton setImage:image forState:UIControlStateNormal];
-    
-    //返回到原来View
-    [self dismissViewControllerAnimated:YES completion:^{}];
-    
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
+    if (error != NULL) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"出错了!" message:@"存不了T_T" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [alert show];
+        [alert release];
+    } else {
+        NSLog(@"保存成功");
+    }
 }
+
 - (void)dealloc {
     [_imageButton release];
     [super dealloc];

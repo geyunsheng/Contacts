@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Person.h"
 
-@interface AddViewController : UIViewController<UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface AddViewController : UIViewController<UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
 {
     Person *_person;
 }
