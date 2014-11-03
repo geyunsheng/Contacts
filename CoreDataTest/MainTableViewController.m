@@ -271,22 +271,27 @@
 }
 
 //给我们的通讯录加上索引，下面的方法返回的时一个数组
--(NSArray *) sectionIndexTitlesForTableView:(UITableView *)tableView
+//-(NSArray *) sectionIndexTitlesForTableView:(UITableView *)tableView
+//{
+//    //通过fetchedResultsController来获取section数组
+//    NSArray *sectionArray = [self.fetchedResultsController sections];
+//    
+//    //新建可变数组来返回索引数组，大小为sectionArray中元素的多少
+//    NSMutableArray *index = [NSMutableArray arrayWithCapacity:sectionArray.count];
+//    
+//    //通过循环获取每个section的header,存入addObject中
+//    for (int i = 0; i < sectionArray.count; i ++)
+//    {
+//        id <NSFetchedResultsSectionInfo> info = sectionArray[i];
+//        [index addObject:[info name]];
+//    }
+//    
+//    //返回索引数组
+//    return index;
+//}
+- (IBAction)setEdit:(id)sender
 {
-    //通过fetchedResultsController来获取section数组
-    NSArray *sectionArray = [self.fetchedResultsController sections];
+    [self.tableView setEditing:!self.tableView.editing animated:YES];
     
-    //新建可变数组来返回索引数组，大小为sectionArray中元素的多少
-    NSMutableArray *index = [NSMutableArray arrayWithCapacity:sectionArray.count];
-    
-    //通过循环获取每个section的header,存入addObject中
-    for (int i = 0; i < sectionArray.count; i ++)
-    {
-        id <NSFetchedResultsSectionInfo> info = sectionArray[i];
-        [index addObject:[info name]];
-    }
-    
-    //返回索引数组
-    return index;
 }
 @end

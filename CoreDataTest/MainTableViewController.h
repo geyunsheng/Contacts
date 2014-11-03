@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface MainTableViewController : UITableViewController<NSFetchedResultsControllerDelegate>
+- (IBAction)setEdit:(id)sender;
 
 @end
