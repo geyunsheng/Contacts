@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MainTableViewController : UIViewController<NSFetchedResultsControllerDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface MainTableViewController : UITableViewController<NSFetchedResultsControllerDelegate>
 {
     UITableView* _tableView;
 }
