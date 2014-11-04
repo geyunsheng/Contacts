@@ -7,7 +7,7 @@
 //
 
 #import "MainTableViewController.h"
-//#import "ModifyViewController.h"
+#import "AddViewController.h"
 #import "Person.h"
 
 @interface MainTableViewController ()
@@ -145,6 +145,26 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UIStoryboard *story = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    AddViewController *addView = [story instantiateViewControllerWithIdentifier:@"AddViewController"];
+    Person *person = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [addView setValue:person forKey:@"person"];
+    [self.navigationController pushViewController:addView animated:YES];
+    
+}
+
+-(BOOL) tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
+{
+    
+}
+
 //开启编辑
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -246,48 +266,49 @@
     [self.tableView endUpdates];
 }
 
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    //参数sender是点击的对应的cell
-    //判断sender是否为TableViewCell的对象
-    if ([sender isKindOfClass:[UITableViewCell class]]) {
-        //做一个类型的转换
-        UITableViewCell *cell = (UITableViewCell *)sender;
-        
-        //通过tableView获取cell对应的索引，然后通过索引获取实体对象
-        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-        
-        //用frc通过indexPath来获取Person
-        Person *person = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        
-        //通过segue来获取我们目的视图控制器
-        UIViewController *nextView = [segue destinationViewController];
-        
-        //通过KVC把参数传入目的控制器
-        [nextView setValue:person forKey:@"person"];
-    }
-}
+//
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+//{
+//    //参数sender是点击的对应的cell
+//    //判断sender是否为TableViewCell的对象
+//    if ([sender isKindOfClass:[UITableViewCell class]]) {
+//        //做一个类型的转换
+//        UITableViewCell *cell = (UITableViewCell *)sender;
+//        
+//        //通过tableView获取cell对应的索引，然后通过索引获取实体对象
+//        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+//        
+//        //用frc通过indexPath来获取Person
+//        Person *person = [self.fetchedResultsController objectAtIndexPath:indexPath];
+//        
+//        //通过segue来获取我们目的视图控制器
+//        UIViewController *nextView = [segue destinationViewController];
+//        
+//        //通过KVC把参数传入目的控制器
+//        [nextView setValue:person forKey:@"person"];
+//    }
+//}
 
 //给我们的通讯录加上索引，下面的方法返回的时一个数组
-//-(NSArray *) sectionIndexTitlesForTableView:(UITableView *)tableView
-//{
-//    //通过fetchedResultsController来获取section数组
-//    NSArray *sectionArray = [self.fetchedResultsController sections];
-//    
-//    //新建可变数组来返回索引数组，大小为sectionArray中元素的多少
-//    NSMutableArray *index = [NSMutableArray arrayWithCapacity:sectionArray.count];
-//    
-//    //通过循环获取每个section的header,存入addObject中
-//    for (int i = 0; i < sectionArray.count; i ++)
-//    {
-//        id <NSFetchedResultsSectionInfo> info = sectionArray[i];
-//        [index addObject:[info name]];
-//    }
-//    
-//    //返回索引数组
-//    return index;
-//}
+-(NSArray *) sectionIndexTitlesForTableView:(UITableView *)tableView
+{
+    //通过fetchedResultsController来获取section数组
+    NSArray *sectionArray = [self.fetchedResultsController sections];
+    
+    //新建可变数组来返回索引数组，大小为sectionArray中元素的多少
+    NSMutableArray *index = [NSMutableArray arrayWithCapacity:sectionArray.count];
+    
+    //通过循环获取每个section的header,存入addObject中
+    for (int i = 0; i < sectionArray.count; i ++)
+    {
+        id <NSFetchedResultsSectionInfo> info = sectionArray[i];
+        [index addObject:[info name]];
+    }
+    
+    //返回索引数组
+    return index;
+}
+
 - (IBAction)setEdit:(id)sender
 {
     [self.tableView setEditing:!self.tableView.editing animated:NO];

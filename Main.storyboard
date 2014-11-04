@@ -13,11 +13,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="detailDisclosureButton" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="UMb-hP-GdH" detailTextLabel="kxD-A6-35s" style="IBUITableViewCellStyleSubtitle" id="IIs-q0-Kyt">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="UMb-hP-GdH" detailTextLabel="kxD-A6-35s" style="IBUITableViewCellStyleSubtitle" id="IIs-q0-Kyt">
                                 <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IIs-q0-Kyt" id="3RT-ym-0wj">
-                                    <rect key="frame" x="0.0" y="0.0" width="253" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UMb-hP-GdH">
@@ -36,9 +36,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="qRw-KB-OJ9" kind="push" trigger="accessoryAction" id="3nj-zK-Egq"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -66,7 +63,7 @@
         <!--Add View Controller - 编辑-->
         <scene sceneID="amx-Qm-KGv">
             <objects>
-                <viewController id="qRw-KB-OJ9" customClass="AddViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddViewController" id="qRw-KB-OJ9" customClass="AddViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="OXa-7t-rlD"/>
                         <viewControllerLayoutGuide type="bottom" id="q0A-Gg-3yj"/>
@@ -151,23 +148,6 @@
             </objects>
             <point key="canvasLocation" x="-48" y="-259"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="qIF-oq-gTQ">
-            <objects>
-                <viewController id="6MN-Uj-mz5" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="v7W-wX-RSP"/>
-                        <viewControllerLayoutGuide type="bottom" id="uPS-GB-Xjn"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Bo2-6T-Pqo">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="GgI-jH-4DT" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-        </scene>
     </scenes>
     <resources>
         <image name="button.png" width="108" height="108"/>
@@ -177,7 +157,4 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="3nj-zK-Egq"/>
-    </inferredMetricsTieBreakers>
 </document>
