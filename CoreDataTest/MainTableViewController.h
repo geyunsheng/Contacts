@@ -9,10 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface MainTableViewController : UITableViewController<NSFetchedResultsControllerDelegate>
-{
-    UITableView* _tableView;
-}
-
-@property (retain,nonatomic) UITableView* tableView;
 
 @end

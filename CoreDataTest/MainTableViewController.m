@@ -33,7 +33,7 @@
 {
     self.title = @"通讯录";
     self.tableView = [[[UITableView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame] autorelease];
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.tableView.backgroundColor = [UIColor whiteColor];
     
     UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(setEdit)];
     self.navigationItem.leftBarButtonItem = leftButtonItem;
@@ -42,13 +42,6 @@
     UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(moveToAdd)];
     self.navigationItem.rightBarButtonItem = rightButtonItem;
     [rightButtonItem release];
-    
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
-    tableView.dataSource = self;
-    tableView.delegate = self;
-    [self.view addSubview:tableView];
-    self.tableView = tableView;
-    [tableView release];
     
 }
 
@@ -80,7 +73,6 @@
     //执行fetchedResultsController
     NSError *error;
     if ([self.fetchedResultsController performFetch:&error]) {
-    //    NSLog(@"%@", [error localizedDescription]);
     }
     
     self.fetchedResultsController.delegate = self;
@@ -167,8 +159,6 @@
     
     cell.textLabel.text = person.name;
     cell.detailTextLabel.text = person.number;
-//  cell.textLabel.font = [cell.textLabel.font fontWithSize:17.0f];
-//  cell.detailTextLabel.font = [cell.detailTextLabel.font fontWithSize:15.0f];
     
     if (person.imageData != nil) {
         UIImage *image = [UIImage imageWithData:person.imageData];
