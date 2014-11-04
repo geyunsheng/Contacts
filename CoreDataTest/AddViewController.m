@@ -7,22 +7,82 @@
 //
 
 #import "AddViewController.h"
+#import "MainTableViewController.h"
 #import "pinyin.h"
 
 
 @interface AddViewController ()
-@property (strong, nonatomic) IBOutlet UITextField *nameTextField;
-@property (strong, nonatomic) IBOutlet UITextField *numberTextField;
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-//@property (strong, nonatomic) UIImagePickerController *picker;
-@property (retain, nonatomic) IBOutlet UIButton *imageButton;
 
-- (IBAction)addImage:(id)sender;
-- (IBAction)tapAdd:(id)sender;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
 @end
 
 @implementation AddViewController
 BOOL saveFlag = YES;
+
+-(void)loadView
+{
+    self.title = @"编辑";
+    self.view = [[[UIView alloc]initWithFrame:[UIScreen mainScreen].applicationFrame ]autorelease];
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    UILabel *labelName = [[UILabel alloc]initWithFrame:CGRectMake(50.0f, 100.0f, 50.0f, 30.0f)];
+    labelName.text = @"姓名:";
+    labelName.font = [UIFont systemFontOfSize:17.0f];
+    labelName.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:labelName];
+    [labelName release];
+    
+    UILabel *labelNumber = [[UILabel alloc]initWithFrame:CGRectMake(50.0f, 150.0f, 50.0f, 30.0f)];
+    labelNumber.text = @"号码:";
+    labelNumber.font = [UIFont systemFontOfSize:17.0f];
+    labelNumber.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:labelNumber];
+    [labelNumber release];
+    
+    UITextField *textName = [[UITextField alloc]initWithFrame:CGRectMake(100.0f, 100.0f, 170.0f, 30.0f)];
+    textName.placeholder = @"请输入姓名";
+    [textName setBorderStyle:UITextBorderStyleRoundedRect];
+    [textName setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    textName.font = [UIFont systemFontOfSize:17.0f];
+    textName.backgroundColor = [UIColor clearColor];
+    textName.textColor = [UIColor blackColor];
+    textName.delegate = self;
+    textName.text = self.person.name;
+    self.nameTextField = textName;
+    [self.view addSubview:textName];
+    [textName release];
+    
+    UITextField *textNumber = [[UITextField alloc]initWithFrame:CGRectMake(100.0f, 150.0f, 170.0f, 30.0f)];
+    textNumber.placeholder = @"请输入电话号码";
+    [textNumber setBorderStyle:UITextBorderStyleRoundedRect];
+    [textNumber setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    textNumber.font = [UIFont systemFontOfSize:17.0f];
+    textNumber.backgroundColor = [UIColor clearColor];
+    textNumber.textColor = [UIColor blackColor];
+    textNumber.delegate = self;
+    textNumber.text = self.person.number;
+    self.numberTextField = textNumber;
+    [self.view addSubview:textNumber];
+    [textNumber release];
+    
+    UIButton *imageButton = [[UIButton alloc] initWithFrame:CGRectMake(110.0f, 220.0f, 100.0f, 100.0f)];
+//    [imageButton setBackgroundImage:[UIImage imageNamed:@"person.png"] forState:UIControlStateNormal];
+    [imageButton setImage:[UIImage imageNamed:@"person.png"] forState:UIControlStateNormal];
+    [imageButton addTarget:self action:@selector(addImage) forControlEvents:UIControlEventTouchUpInside];
+    self.personButton = imageButton;
+    [self.view addSubview:imageButton];
+    [imageButton release];
+    
+    UIButton *saveButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    saveButton.frame = CGRectMake(100.0f, 380.0f, 120.0f, 50.0f);
+    [saveButton setTitle:@"保存" forState:UIControlStateNormal];
+    [saveButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    saveButton.titleLabel.font = [UIFont systemFontOfSize:20.0f];
+    [saveButton addTarget:self action:@selector(save) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:saveButton];
+    
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,23 +96,18 @@ BOOL saveFlag = YES;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.nameTextField.delegate = self;
-    self.numberTextField.delegate = self;
-    // Do any additional setup after loading the view.
+
     //通过application对象的代理对象获取上下文
     UIApplication *application = [UIApplication sharedApplication];
     id delegate = application.delegate;
     self.managedObjectContext = [delegate managedObjectContext];
-    self.nameTextField.text = self.person.name;
-    self.numberTextField.text = self.person.number;
     
     if (self.person.imageData != nil)
     {
         UIImage *image = [UIImage imageWithData:self.person.imageData];
-        [self.imageButton setImage:image forState:UIControlStateNormal];
+        [self.personButton setImage:image forState:UIControlStateNormal];
         
     }
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -61,16 +116,6 @@ BOOL saveFlag = YES;
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
     CGRect frame = textField.frame;
@@ -83,7 +128,7 @@ BOOL saveFlag = YES;
     
     if(offset > 0)
     {
-        self.view.frame = CGRectMake(0.0f, - offset, self.view.frame.size.width, self.view.frame.size.height);//64是导航栏和状态栏高度
+        self.view.frame = CGRectMake(0.0f, 64 - offset, self.view.frame.size.width, self.view.frame.size.height);//64是导航栏和状态栏高度
     }
     [UIView commitAnimations];
 }
@@ -94,13 +139,14 @@ BOOL saveFlag = YES;
     return YES;
 }
 
-- (IBAction)tapAdd:(id)sender
+- (void)save
 {
     //如果person为空则新建，如果已经存在则更新
     if (self.person == nil)
     {
         self.person = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([Person class]) inManagedObjectContext:self.managedObjectContext];
     }
+
     if ((self.nameTextField.text.length == 0)||(self.numberTextField.text.length == 0))
     {
         UIAlertView* alert = [[UIAlertView alloc]initWithTitle:nil message:@"姓名和号码不能为空！" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -113,20 +159,19 @@ BOOL saveFlag = YES;
     self.person.name = self.nameTextField.text;
     self.person.number = self.numberTextField.text;
     self.person.firstN = [NSString stringWithFormat:@"%c",pinyinFirstLetter([self.person.name characterAtIndex:0])-32];
-    
+
     //把button上的图片存入对象
-    UIImage *buttonImage = [self.imageButton imageView].image;
+    UIImage *buttonImage = [self.personButton imageView].image;
     self.person.imageData = UIImagePNGRepresentation(buttonImage);
     
     //保存
     NSError *error;
     [self.managedObjectContext save:&error];
   
-    
     //保存成功后POP到表视图
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
-- (IBAction)addImage:(id)sender
+- (void)addImage
 {
     UIActionSheet* sheet = [[UIActionSheet alloc]initWithTitle:@"请选择照片来源" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera",@"Image Gallary", nil ];
     sheet.actionSheetStyle = UIActionSheetStyleAutomatic;
@@ -137,7 +182,6 @@ BOOL saveFlag = YES;
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    
     switch (buttonIndex)
     {
         case 0:
@@ -162,23 +206,19 @@ BOOL saveFlag = YES;
         }
         default:
             break;
-            
     }
 }
 
-//实现图片回调方法，从相册获取图片
 -(void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    //获取到编辑好的图片
     UIImage * image = info[UIImagePickerControllerEditedImage];
-    //把获取的图片设置成用户的头像
-    [self.imageButton setImage:image forState:UIControlStateNormal];
-    //存储照片
+
+    [self.personButton setImage:image forState:UIControlStateNormal];
+
     if (YES == saveFlag)
     {
         UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
     }
-    //返回到原来View
     [self dismissViewControllerAnimated:YES completion:^{}];
     
 }
@@ -199,7 +239,6 @@ BOOL saveFlag = YES;
 }
 
 - (void)dealloc {
-    [_imageButton release];
     [super dealloc];
 }
 @end

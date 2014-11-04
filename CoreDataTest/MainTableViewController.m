@@ -20,13 +20,36 @@
 
 @implementation MainTableViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithStyle:style];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
     }
     return self;
+}
+
+- (void)loadView
+{
+    self.title = @"通讯录";
+    self.view = [[[UIView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame] autorelease];
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(setEdit)];
+    self.navigationItem.leftBarButtonItem = leftButtonItem;
+    [leftButtonItem release];
+    
+    UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(moveToAdd)];
+    self.navigationItem.rightBarButtonItem = rightButtonItem;
+    [rightButtonItem release];
+    
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
+    tableView.dataSource = self;
+    tableView.delegate = self;
+    [self.view addSubview:tableView];
+    self.tableView = tableView;
+    [tableView release];
+    
 }
 
 - (void)viewDidLoad
@@ -62,30 +85,30 @@
     
     self.fetchedResultsController.delegate = self;
     
-    self.refreshControl = [[UIRefreshControl alloc]init];
-   // self.refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"下拉刷新"];
-    [self.refreshControl addTarget:self action:@selector(refreshValue:) forControlEvents:UIControlEventValueChanged];
-    
+//    self.tableView.refreshControl = [[UIRefreshControl alloc]init];
+//   // self.refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"下拉刷新"];
+//    [self.refreshControl addTarget:self action:@selector(refreshValue:) forControlEvents:UIControlEventValueChanged];
+//    
 }
-
--(void)refreshValue:(id)sender
-{
-    if (self.refreshControl.refreshing)
-    {
-        self.refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"刷新中"];
-    }
-    [self performSelector:@selector(refreshData) withObject:nil afterDelay:2];
-}
-
--(void)refreshData
-{
-    [self.refreshControl endRefreshing];
-//    self.refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"下拉刷新"];
-    [self.tableView reloadData];
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"Refreshed" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-    [alert show];
-    [alert release];
-}
+//
+//-(void)refreshValue:(id)sender
+//{
+//    if (self.refreshControl.refreshing)
+//    {
+//        self.refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"刷新中"];
+//    }
+//    [self performSelector:@selector(refreshData) withObject:nil afterDelay:2];
+//}
+//
+//-(void)refreshData
+//{
+//    [self.refreshControl endRefreshing];
+////    self.refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"下拉刷新"];
+//    [self.tableView reloadData];
+//    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"Refreshed" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//    [alert show];
+//    [alert release];
+//}
 
 - (void)didReceiveMemoryWarning
 {
@@ -112,6 +135,10 @@
     return [sectionInfo numberOfObjects];
 }
 
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//   // return 80;
+//}
 
 //通过获取section中的信息来获取header和每个secion中有多少数据
 
@@ -125,18 +152,24 @@
     return [sectionInfo name];
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    static NSString* strIndentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:strIndentifier];
+    if (cell == nil)
+    {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:strIndentifier];
+    }
+    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     
     //获取实体对象
     Person *person = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     cell.textLabel.text = person.name;
     cell.detailTextLabel.text = person.number;
+//  cell.textLabel.font = [cell.textLabel.font fontWithSize:17.0f];
+//  cell.detailTextLabel.font = [cell.detailTextLabel.font fontWithSize:15.0f];
     
-    // Configure the cell...
     if (person.imageData != nil) {
         UIImage *image = [UIImage imageWithData:person.imageData];
         cell.imageView.image = image;
@@ -147,12 +180,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIStoryboard *story = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    AddViewController *addView = [story instantiateViewControllerWithIdentifier:@"AddViewController"];
+    AddViewController *addView = [[[AddViewController alloc]init]autorelease];
     Person *person = [self.fetchedResultsController objectAtIndexPath:indexPath];
     [addView setValue:person forKey:@"person"];
     [self.navigationController pushViewController:addView animated:YES];
-    
 }
 
 -(BOOL) tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
@@ -193,7 +224,6 @@
 }
 
 //设置删除的名字
-
 -(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return @"删除";
@@ -266,29 +296,6 @@
     [self.tableView endUpdates];
 }
 
-//
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-//{
-//    //参数sender是点击的对应的cell
-//    //判断sender是否为TableViewCell的对象
-//    if ([sender isKindOfClass:[UITableViewCell class]]) {
-//        //做一个类型的转换
-//        UITableViewCell *cell = (UITableViewCell *)sender;
-//        
-//        //通过tableView获取cell对应的索引，然后通过索引获取实体对象
-//        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-//        
-//        //用frc通过indexPath来获取Person
-//        Person *person = [self.fetchedResultsController objectAtIndexPath:indexPath];
-//        
-//        //通过segue来获取我们目的视图控制器
-//        UIViewController *nextView = [segue destinationViewController];
-//        
-//        //通过KVC把参数传入目的控制器
-//        [nextView setValue:person forKey:@"person"];
-//    }
-//}
-
 //给我们的通讯录加上索引，下面的方法返回的时一个数组
 -(NSArray *) sectionIndexTitlesForTableView:(UITableView *)tableView
 {
@@ -309,9 +316,14 @@
     return index;
 }
 
-- (IBAction)setEdit:(id)sender
+- (void)setEdit
 {
-    [self.tableView setEditing:!self.tableView.editing animated:NO];
-    
+    [self.tableView setEditing:!self.tableView.editing animated:YES];
+}
+
+-(void)moveToAdd
+{
+    AddViewController *addViewController = [[[AddViewController alloc]init]autorelease];
+    [self.navigationController pushViewController:addViewController animated:YES];
 }
 @end

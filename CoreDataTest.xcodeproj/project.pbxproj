@@ -22,10 +22,9 @@
 		189DAA6119FDFF2100DFBC71 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 189DAA4519FDFF2100DFBC71 /* CoreData.framework */; };
 		189DAA6919FDFF2100DFBC71 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 189DAA6719FDFF2100DFBC71 /* InfoPlist.strings */; };
 		189DAA6B19FDFF2100DFBC71 /* CoreDataTestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 189DAA6A19FDFF2100DFBC71 /* CoreDataTestTests.m */; };
-		189DAA7819FE1E4400DFBC71 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 189DAA7719FE1E4400DFBC71 /* Main.storyboard */; };
 		189DAA7B19FE256300DFBC71 /* AddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 189DAA7A19FE256300DFBC71 /* AddViewController.m */; };
 		189DAA7E19FE257700DFBC71 /* MainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 189DAA7D19FE257700DFBC71 /* MainTableViewController.m */; };
-		189DAA8319FF27E600DFBC71 /* button.png in Resources */ = {isa = PBXBuildFile; fileRef = 189DAA8219FF27E600DFBC71 /* button.png */; };
+		189DAA8319FF27E600DFBC71 /* person.png in Resources */ = {isa = PBXBuildFile; fileRef = 189DAA8219FF27E600DFBC71 /* person.png */; };
 		189DAA8619FF2B2F00DFBC71 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 189DAA8519FF2B2F00DFBC71 /* Person.m */; };
 		189DAA8919FF384200DFBC71 /* pinyin.c in Sources */ = {isa = PBXBuildFile; fileRef = 189DAA8719FF384200DFBC71 /* pinyin.c */; };
 /* End PBXBuildFile section */
@@ -59,12 +58,11 @@
 		189DAA6619FDFF2100DFBC71 /* CoreDataTestTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CoreDataTestTests-Info.plist"; sourceTree = "<group>"; };
 		189DAA6819FDFF2100DFBC71 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		189DAA6A19FDFF2100DFBC71 /* CoreDataTestTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoreDataTestTests.m; sourceTree = "<group>"; };
-		189DAA7719FE1E4400DFBC71 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../Main.storyboard; sourceTree = "<group>"; };
 		189DAA7919FE256300DFBC71 /* AddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddViewController.h; sourceTree = "<group>"; };
 		189DAA7A19FE256300DFBC71 /* AddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddViewController.m; sourceTree = "<group>"; };
 		189DAA7C19FE257700DFBC71 /* MainTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableViewController.h; sourceTree = "<group>"; };
 		189DAA7D19FE257700DFBC71 /* MainTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableViewController.m; sourceTree = "<group>"; };
-		189DAA8219FF27E600DFBC71 /* button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button.png; sourceTree = "<group>"; };
+		189DAA8219FF27E600DFBC71 /* person.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = person.png; sourceTree = "<group>"; };
 		189DAA8419FF2B2F00DFBC71 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Person.h; path = ../Person.h; sourceTree = "<group>"; };
 		189DAA8519FF2B2F00DFBC71 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Person.m; path = ../Person.m; sourceTree = "<group>"; };
 		189DAA8719FF384200DFBC71 /* pinyin.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pinyin.c; sourceTree = "<group>"; };
@@ -135,8 +133,7 @@
 				189DAA8819FF384200DFBC71 /* pinyin.h */,
 				189DAA8419FF2B2F00DFBC71 /* Person.h */,
 				189DAA8519FF2B2F00DFBC71 /* Person.m */,
-				189DAA8219FF27E600DFBC71 /* button.png */,
-				189DAA7719FE1E4400DFBC71 /* Main.storyboard */,
+				189DAA8219FF27E600DFBC71 /* person.png */,
 				189DAA5019FDFF2100DFBC71 /* AppDelegate.h */,
 				189DAA5119FDFF2100DFBC71 /* AppDelegate.m */,
 				189DAA5619FDFF2100DFBC71 /* Images.xcassets */,
@@ -254,8 +251,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				189DAA7819FE1E4400DFBC71 /* Main.storyboard in Resources */,
-				189DAA8319FF27E600DFBC71 /* button.png in Resources */,
+				189DAA8319FF27E600DFBC71 /* person.png in Resources */,
 				189DAA4C19FDFF2100DFBC71 /* InfoPlist.strings in Resources */,
 				189DAA5719FDFF2100DFBC71 /* Images.xcassets in Resources */,
 			);
@@ -481,6 +477,7 @@
 				189DAA7019FDFF2100DFBC71 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		189DAA7119FDFF2100DFBC71 /* Build configuration list for PBXNativeTarget "CoreDataTestTests" */ = {
 			isa = XCConfigurationList;
@@ -489,6 +486,7 @@
 				189DAA7319FDFF2100DFBC71 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

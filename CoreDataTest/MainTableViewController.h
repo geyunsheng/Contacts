@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MainTableViewController : UITableViewController<NSFetchedResultsControllerDelegate>
-- (IBAction)setEdit:(id)sender;
+@interface MainTableViewController : UIViewController<NSFetchedResultsControllerDelegate,UITableViewDataSource,UITableViewDelegate>
+{
+    UITableView* _tableView;
+}
+
+@property (retain,nonatomic) UITableView* tableView;
 
 @end

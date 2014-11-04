@@ -12,7 +12,15 @@
 @interface AddViewController : UIViewController<UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
 {
     Person *_person;
+    UITextField *_nameTextField;
+    UITextField *_numberTextField;
+    UIButton *_personButton;
 }
 
 @property (strong,nonatomic)Person *person;
+@property (retain,nonatomic) UITextField *nameTextField;
+@property (retain,nonatomic) UITextField *numberTextField;
+@property (retain,nonatomic) UIButton *personButton;
+
+
 @end
