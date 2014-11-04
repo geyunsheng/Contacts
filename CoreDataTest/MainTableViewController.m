@@ -167,9 +167,8 @@
         
         //保存
         NSError *error;
-        if ([self.managedObjectContext save:&error]) {
-            NSLog(@"%@", [error localizedDescription]);
-        }
+        [self.managedObjectContext save:&error];
+       
     }
 }
 
@@ -291,7 +290,7 @@
 //}
 - (IBAction)setEdit:(id)sender
 {
-    [self.tableView setEditing:!self.tableView.editing animated:YES];
+    [self.tableView setEditing:!self.tableView.editing animated:NO];
     
 }
 @end

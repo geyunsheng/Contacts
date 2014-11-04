@@ -120,9 +120,8 @@ BOOL saveFlag = YES;
     
     //保存
     NSError *error;
-    if (![self.managedObjectContext save:&error]) {
-        NSLog(@"%@", [error localizedDescription]);
-    }
+    [self.managedObjectContext save:&error];
+  
     
     //保存成功后POP到表视图
     [self.navigationController popToRootViewControllerAnimated:YES];
@@ -138,24 +137,29 @@ BOOL saveFlag = YES;
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    UIImagePickerController *picker = [[[UIImagePickerController alloc] init]autorelease];
+    
     switch (buttonIndex)
     {
         case 0:
+        {
+            UIImagePickerController *picker = [[[UIImagePickerController alloc] init]autorelease];
             picker.sourceType = UIImagePickerControllerSourceTypeCamera;
             picker.delegate = self;
             picker.allowsEditing = YES;
             saveFlag = YES;
             [self presentViewController:picker animated:YES completion:nil];
             break;
+        }
         case 1:
-//            UIImagePickerController *picker = [[[UIImagePickerController alloc] init]autorelease];
+        {
+            UIImagePickerController *picker = [[[UIImagePickerController alloc] init] autorelease];
             picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
             picker.delegate = self;
             picker.allowsEditing = YES;
             saveFlag = NO;
             [self presentViewController:picker animated:YES completion:nil];
             break;
+        }
         default:
             break;
             
