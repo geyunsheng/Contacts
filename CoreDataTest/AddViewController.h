@@ -17,7 +17,7 @@
     UIButton *_personButton;
 }
 
-@property (strong,nonatomic)Person *person;
+@property (strong,nonatomic) Person *person;
 @property (retain,nonatomic) UITextField *nameTextField;
 @property (retain,nonatomic) UITextField *numberTextField;
 @property (retain,nonatomic) UIButton *personButton;
