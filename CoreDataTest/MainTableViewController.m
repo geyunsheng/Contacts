@@ -72,8 +72,7 @@
     
     //执行fetchedResultsController
     NSError *error;
-    if ([self.fetchedResultsController performFetch:&error]) {
-    }
+    [self.fetchedResultsController performFetch:&error];
     
     self.fetchedResultsController.delegate = self;
     

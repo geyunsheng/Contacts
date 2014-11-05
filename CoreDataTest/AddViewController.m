@@ -105,14 +105,12 @@ BOOL saveFlag = YES;
     {
         UIImage *image = [UIImage imageWithData:self.person.imageData];
         [self.personButton setImage:image forState:UIControlStateNormal];
-        
     }
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField
