@@ -67,7 +67,6 @@ BOOL saveFlag = YES;
     [textNumber release];
     
     UIButton *imageButton = [[UIButton alloc] initWithFrame:CGRectMake(110.0f, 220.0f, 100.0f, 100.0f)];
-//    [imageButton setBackgroundImage:[UIImage imageNamed:@"person.png"] forState:UIControlStateNormal];
     [imageButton setImage:[UIImage imageNamed:@"person.png"] forState:UIControlStateNormal];
     [imageButton addTarget:self action:@selector(addImage) forControlEvents:UIControlEventTouchUpInside];
     self.personButton = imageButton;
